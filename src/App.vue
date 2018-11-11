@@ -14,15 +14,12 @@
   import Header from './components/Header.vue'
   import Main from './components/Main.vue'
   import Footer from './components/Footer.vue'
-
+  import StorageUtile from './utils/index'
   export default{
     data(){
       return{
-        todos:[
-          {name:'吃饭', complete:false},
-          {name:'睡觉', complete:false},
-          {name:'写代码', complete:false}
-        ]
+        todos:StorageUtile.readTodos()
+
       }
     },
     methods:{
@@ -38,8 +35,16 @@
       selectAllTodos(isCheck){
       this.todos.forEach(todo=>todo.complete=isCheck)
       }
-
   },
+    watch:{
+      todos:{
+        deep:true,
+//        handler:function (value) {
+//          StorageUtile.saveTodos(value)
+        handler:StorageUtile.saveTodos
+
+      }
+    },
 
     components:{
       TodoHeader:Header,
